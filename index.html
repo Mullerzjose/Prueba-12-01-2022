@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Evaluacion Modulo 3</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	 crossorigin="anonymous">
+</head>
+
+<body>
+	<nav class="navbar p-2 rounded-3 text-white navbar-light bg-secondary">
+			<button onclick="ingreso();" class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"   aria-label="Toggle navigation">Ingreso de Productos</button>
+      <button onclick="mostrar();" class="navbar-toggler text-white " type="button" data-bs-toggle="collapse"   data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"           aria-label="Toggle navigation">Mostrar Lista</button>
+      <button onclick="generar();" class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"   data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"           aria-label="Toggle navigation">Generar Compra</button>
+    <span class="col-8"></span>
+            
+</nav>
+<p id="test"></p>
+ 
+    <script type="text/javascript">
+    let granTotal=0;
+    
+      function ingreso(){
+        async function getFile(){
+            let promesa=new Promise(function(resolve){
+                let req=new XMLHttpRequest();
+                req.open('GET','ingreso.html');
+                req.onload=function(){
+                    if(req.status==200){
+                        resolve(req.response);
+                    }else{
+                        resolve("error, archivo no encontrado");
+                    }
+                };
+                req.send();
+            });
+            document.getElementById('test').innerHTML=await promesa;
+        }
+        getFile();
+      }
+      function mostrar(){
+        async function getFile(){
+            let promesa=new Promise(function(resolve){
+                let req=new XMLHttpRequest();
+                req.open('GET','mostrarlista.html');
+                req.onload=function(){
+                    if(req.status==200){
+                        resolve(req.response);
+                    }else{
+                        resolve("error, archivo no encontrado");
+                    }
+                };
+                req.send();
+            });
+            document.getElementById('test').innerHTML=await promesa;
+        }
+        getFile();
+      }
+      function generar(){
+        async function getFile(){
+            let promesa=new Promise(function(resolve){
+                let req=new XMLHttpRequest();
+                req.open('GET','generarcompra.html');
+                req.onload=function(){
+                    if(req.status==200){
+                        resolve(req.response);
+                    }else{
+                        resolve("error, archivo no encontrado");
+                    }
+                };
+                req.send();
+            });
+            document.getElementById('test').innerHTML=await promesa;
+            mostrarGenerarCompra();
+        }
+        getFile();
+      }
+    
+      let nombre = [];
+      let valor = [];
+      let cantidad = [];
+
+      function ingresar(){
+        let v1 = document.getElementById("nombreProducto").value
+        let v2 = parseInt(document.getElementById('valorProducto').value);
+        let v3 = parseInt(document.getElementById('cantidadProducto').value);
+        
+        nombre.push(v1);
+        valor.push(v2);
+        cantidad.push(v3);
+
+        document.getElementById("nombreProducto").value = "";
+        document.getElementById("valorProducto").value = "";
+        document.getElementById("cantidadProducto").value = "";
+        
+      }
+      function mostrarLista(){
+        let insertado="";
+        for (var i=0; i<nombre.length;i++){
+          insertado+="<tr><td>"+i+"</td><td>"+nombre[i]+"</td><td>"+valor[i]+"</td><td>"+cantidad[i]+"</td></tr>"
+        }
+        document.getElementById('tablaListado').innerHTML=insertado;
+      }
+
+      function mostrarGenerarCompra(){
+        let insertado="";
+        for (var i=0; i<nombre.length;i++){
+          let total = totCompra(valor[i],cantidad[i])
+          insertado+="<tr><td>"+nombre[i]+"</td><td>"+total+"</td><td>"+iva(total)+"</td><td>"+conIVA(total)+"</td></tr>"
+          granTotal=granTotal+total;
+        }
+        insertado+="<tr><td colspan=3>Total de la compra</td><td>"+conIVA(granTotal)+"</td></tr>";
+        document.getElementById('cuerpoTabla').innerHTML=insertado;
+
+      }
+      function totCompra(cant,vun){
+        return cant*vun;
+      }
+      function iva(v1){
+        return v1*0.19;
+      }
+      function conIVA(c1){
+        return c1+iva(c1);
+      } 
+      function descuento(){
+        let miTotal= conIVA(granTotal);
+        console.log("Valor de la variable Gran Total: "+granTotal);
+        console.log("variableMiTotal: "+miTotal);
+        let desc = document.getElementById('descuento').value;
+        if(desc==""){
+          console.log("Sin descuento");
+        }else if(isNaN(desc)){
+          alert("Solo ingrese numeros");
+        }else{
+          desc= parseInt(desc);
+          let porcentajeDesc=desc/100;
+          let miDescuento=miTotal*porcentajeDesc;
+          let nuevoValor=miTotal- miDescuento;
+          document.getElementById('msgDescuento').hidden=false;
+          document.getElementById('queDescuento').innerHTML=desc;
+          document.getElementById('nuevoTotal').innerHTML=nuevoValor;
+        }
+      }
+
+      function resetear(){
+        nombre.length = 0;
+        valor.length = 0;
+        cantidad.length = 0;
+      }
+      function eliminar(){
+        let elim = document.getElementById('elim').value;
+        if (contiene(elim,nombre)){
+          let indice=nombre.indexOf(elim);
+          nombre.splice(indice,1)
+        }else{
+          alert("Item no existe");
+      }
+      mostrarLista();
+      }
+      
+      function modifica(){
+        let emod=document.getElementById('emod').value;
+        let cmod=parseInt(document.getElementById('cmod').value);
+        if (contiene(emod,nombre)){
+          let indice=nombre.indexOf(emod);
+          cantidad[indice]=cmod;
+        }else{
+          alert("Item no encontrado");
+        }
+        mostrarLista();
+      }
+      function contiene(cadena, arreglo){
+			 return(arreglo.indexOf(cadena) > -1);
+		 }
+      
+    </script>
+  </body>
+</html>

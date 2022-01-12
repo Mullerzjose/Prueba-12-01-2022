@@ -1,0 +1,53 @@
+<html>
+<head>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  <body style="background-color: beige;">
+  
+  </body>
+
+  <style type="text/css">
+    *{
+      box-sizing:  border-box;
+    }
+
+    body{
+      font-family:  arial, helvetica, sans-serif;
+    }
+
+  </style>
+
+<br>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Elementos a comprar</th>
+        <th>Total de la compra</th>
+        <th>IVA</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="cuerpoTabla">
+    </tbody>
+  </table>  
+
+<br>
+<br>
+
+% Descuento: <input type="text" name="descuento" id="descuento"><br>
+
+<br>
+
+<button class="btn btn-secondary btn-sm" onclick="descuento();">Aplicar descuento</button>
+<div id="msgDescuento" hidden>
+<br>
+<br>
+<p> El nuevo valor total con <span id="queDescuento"></span>% de descuento aplicado es de <strong><span id="nuevoTotal"></span></strong></p>
+</div>
+
+</head>
+</html>

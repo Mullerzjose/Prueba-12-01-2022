@@ -1,0 +1,25 @@
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Elementos a comprar</th>
+        <th>Total de la compra</th>
+        <th>IVA</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="cuerpoTabla">
+    </tbody>
+  </table>  
+
+<br>
+<br>
+Descuento: <input type="text" name="descuento" id="descuento"><br>
+<button class="btn btn-secondary btn-sm" onclick="descuento();">Aplicar descuento</button>
+<div id="msgDescuento" hidden>
+<br>
+<br>
+<p> El nuevo valor total con <span id="queDescuento"></span>% de descuento aplicado es de <strong><span id="nuevoTotal"></span></strong></p>
+</div>
+
+

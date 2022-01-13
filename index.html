@@ -24,6 +24,7 @@
       font-family:  arial, helvetica, sans-serif;
     }
 
+  
   </style>
 
 <body>
@@ -140,12 +141,15 @@
       function totCompra(cant,vun){
         return cant*vun;
       }
+
       function iva(v1){
         return v1*0.19;
       }
+
       function conIVA(c1){
         return c1+iva(c1);
-      } 
+      }
+
       function descuento(){
         let miTotal= conIVA(granTotal);
         console.log("Valor de la variable Gran Total: "+granTotal);
@@ -171,13 +175,14 @@
         valor.length = 0;
         cantidad.length = 0;
       }
+
       function eliminar(){
         let elim = document.getElementById('elim').value;
         if (contiene(elim,nombre)){
           let indice=nombre.indexOf(elim);
           nombre.splice(indice,1)
         }else{
-          alert("Item no existe");
+          alert("Producto no existe");
       }
       mostrarLista();
       }
@@ -189,10 +194,11 @@
           let indice=nombre.indexOf(emod);
           cantidad[indice]=cmod;
         }else{
-          alert("Item no encontrado");
+          alert("Producto no existe");
         }
         mostrarLista();
       }
+
       function contiene(cadena, arreglo){
 			 return(arreglo.indexOf(cadena) > -1);
 		 }
